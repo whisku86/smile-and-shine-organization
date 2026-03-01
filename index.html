@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="logo2.png" type="image/png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smile and Shine Girls Foundation — Inspiring Smiles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<style>
+/* ═══════════════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════════════ */
+:root {
+  --ink:        #0e0018;
+  --deep:       #1a0030;
+  --royal:      #2d0050;
+  --plum:       #4a0080;
+  --violet:     #6b22a8;
+  --grape:      #8b3fc8;
+  --mist:       #b07de0;
+  --lavender:   #d4b0f5;
+  --frost:      #f0e6ff;
+  --silk:       #faf5ff;
+
+  --gold:       #e8b84b;
+  --gold-dim:   #c99a32;
+  --gold-pale:  #fdf3d8;
+
+  --blush:      #e05c8a;
+  --rose:       #f07aaa;
+
+  --white:      #ffffff;
+  --body-text:  #2a1040;
+  --mid-text:   #5a3878;
+  --muted:      #9070b0;
+
+  --r-xs:  6px;
+  --r-sm:  12px;
+  --r-md:  20px;
+  --r-lg:  32px;
+  --r-xl:  48px;
+  --r-full: 999px;
+
+  --sh-xs:  0 2px 8px  rgba(45,0,80,.12);
+  --sh-sm:  0 4px 20px rgba(45,0,80,.16);
+  --sh-md:  0 8px 40px rgba(45,0,80,.22);
+  --sh-lg:  0 20px 70px rgba(45,0,80,.30);
+  --sh-xl:  0 30px 100px rgba(45,0,80,.38);
+
+  --ease: cubic-bezier(.4,0,.2,1);
+  --t:    .32s var(--ease);
+}
+
+/* ═══════════════════════════════════════════════════
+   RESET + BASE
+═══════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'DM Sans',system-ui,sans-serif;
+  color:var(--body-text);
+  background:var(--deep);
+  overflow-x:hidden;
+  line-height:1.65;
+}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer;border:none}
+section{scroll-margin-top:72px}
+h1,h2,h3,h4{font-family:'DM Serif Display',Georgia,serif;line-height:1.15;letter-spacing:-.01em}
+
+/* ═══════════════════════════════════════════════════
+   GLOBAL NOISE TEXTURE OVERLAY
+═══════════════════════════════════════════════════ */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:.4;pointer-events:none;z-index:0;
+}
+
+/* ═══════════════════════════════════════════════════
+   FLOATING BACKGROUND ORBS
+═══════════════════════════════════════════════════ */
+.orb-canvas{
+  position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
+}
+.orb{
+  position:absolute;border-radius:50%;filter:blur(80px);opacity:.18;
+  animation:drift 20s ease-in-out infinite alternate;
+}
+.orb-1{width:600px;height:600px;background:var(--plum);top:-10%;left:-15%;animation-duration:24s}
+.orb-2{width:400px;height:400px;background:var(--blush);top:40%;right:-10%;animation-duration:18s;animation-delay:-7s}
+.orb-3{width:500px;height:500px;background:var(--violet);bottom:-15%;left:30%;animation-duration:22s;animation-delay:-12s}
+@keyframes drift{
+  from{transform:translate(0,0) scale(1)}
+  to{transform:translate(40px,30px) scale(1.08)}
+}
+
+/* ═══════════════════════════════════════════════════
+   SCROLL REVEAL SYSTEM
+═══════════════════════════════════════════════════ */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.visible{opacity:1;transform:none}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal-left.visible{opacity:1;transform:none}
+.reveal-right{opacity:0;transform:translateX(40px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal-right.visible{opacity:1;transform:none}
+.delay-1{transition-delay:.1s}.delay-2{transition-delay:.2s}.delay-3{transition-delay:.3s}
+.delay-4{transition-delay:.4s}.delay-5{transition-delay:.5s}.delay-6{transition-delay:.6s}
+
+/* ═══════════════════════════════════════════════════
+   NAVBAR
+═══════════════════════════════════════════════════ */
+#navbar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(26,0,48,.85);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(176,125,224,.18);
+  transition:background var(--t),box-shadow var(--t);
+}
+#navbar.scrolled{
+  background:rgba(14,0,24,.95);
+  box-shadow:var(--sh-md);
+}
+.nav-inner{
+  max-width:1280px;margin:0 auto;
+  padding:0 5%;
+  display:flex;align-items:center;justify-content:space-between;
+  height:72px;
+}
+.nav-logo img{
+  height:52px;width:52px;border-radius:12px;
+  transition:transform var(--t),box-shadow var(--t);
+}
+.nav-logo img:hover{transform:scale(1.06);box-shadow:0 0 0 3px var(--gold)}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none}
+.nav-links a{
+  color:rgba(255,255,255,.78);
+  font-size:.825rem;font-weight:500;
+  letter-spacing:.06em;text-transform:uppercase;
+  padding:.45rem 1rem;border-radius:var(--r-full);
+  transition:var(--t);position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%) scaleX(0);
+  width:60%;height:2px;background:var(--gold);border-radius:2px;
+  transition:transform var(--t);
+}
+.nav-links a:hover{color:var(--white);background:rgba(255,255,255,.07)}
+.nav-links a:hover::after{transform:translateX(-50%) scaleX(1)}
+.nav-cta{
+  background:linear-gradient(135deg,var(--gold),var(--gold-dim));
+  color:var(--royal)!important;font-weight:700!important;
+  padding:.5rem 1.3rem!important;border-radius:var(--r-full)!important;
+  box-shadow:0 4px 18px rgba(232,184,75,.35);
+  transition:var(--t)!important;
+}
+.nav-cta:hover{transform:translateY(-2px)!important;box-shadow:0 8px 28px rgba(232,184,75,.5)!important}
+.nav-cta::after{display:none!important}
+
+/* Hamburger */
+.nav-burger{display:none;flex-direction:column;gap:5px;padding:8px;cursor:pointer;background:none;border:none}
+.nav-burger span{display:block;width:24px;height:2px;background:var(--white);border-radius:2px;transition:var(--t)}
+.nav-mobile{
+  display:none;flex-direction:column;gap:0;
+  background:rgba(14,0,24,.97);backdrop-filter:blur(20px);
+  border-top:1px solid rgba(176,125,224,.15);
+  overflow:hidden;max-height:0;transition:max-height .4s var(--ease);
+}
+.nav-mobile.open{max-height:500px}
+.nav-mobile a{
+  color:rgba(255,255,255,.8);font-size:.9rem;font-weight:500;
+  padding:1rem 5%;letter-spacing:.05em;text-transform:uppercase;
+  border-bottom:1px solid rgba(255,255,255,.05);
+  transition:var(--t);
+}
+.nav-mobile a:hover{color:var(--gold);background:rgba(255,255,255,.03);padding-left:7%}
+@media(max-width:860px){
+  .nav-links{display:none}
+  .nav-burger{display:flex}
+  .nav-mobile{display:flex}
+}
+
+/* ═══════════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════════ */
+#home{position:relative;overflow:hidden;padding:0}
+.hero{
+  min-height:100vh;
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;
+  max-width:1280px;margin:0 auto;padding:120px 5% 80px;
+  gap:60px;position:relative;z-index:1;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(232,184,75,.12);
+  border:1px solid rgba(232,184,75,.3);
+  color:var(--gold);
+  font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:.45rem 1.1rem;border-radius:var(--r-full);
+  margin-bottom:24px;
+  animation:fadeDown .8s var(--ease) both;
+}
+.hero-badge i{font-size:.75rem}
+.hero h1{
+  font-size:clamp(2.8rem,5.5vw,4.6rem);
+  color:var(--white);
+  margin-bottom:24px;
+  animation:fadeDown .8s .15s var(--ease) both;
+  font-weight:400;
+}
+.hero h1 em{
+  font-style:italic;
+  background:linear-gradient(135deg,var(--gold) 0%,var(--rose) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-desc{
+  font-size:1.1rem;color:rgba(255,255,255,.68);
+  line-height:1.75;max-width:480px;margin-bottom:40px;font-weight:300;
+  animation:fadeDown .8s .3s var(--ease) both;
+}
+.hero-actions{
+  display:flex;gap:16px;flex-wrap:wrap;
+  animation:fadeDown .8s .45s var(--ease) both;
+}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'DM Sans',sans-serif;font-weight:600;
+  font-size:.9rem;letter-spacing:.04em;text-transform:uppercase;
+  border-radius:var(--r-full);padding:14px 32px;
+  transition:var(--t);border:none;cursor:pointer;
+}
+.btn-gold{
+  background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dim) 100%);
+  color:var(--royal);
+  box-shadow:0 6px 24px rgba(232,184,75,.4);
+}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(232,184,75,.55)}
+.btn-ghost{
+  background:rgba(255,255,255,.08);
+  color:var(--white);
+  border:1px solid rgba(255,255,255,.2);
+}
+.btn-ghost:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.4);transform:translateY(-2px)}
+.btn-purple{
+  background:linear-gradient(135deg,var(--plum) 0%,var(--violet) 100%);
+  color:var(--white);
+  box-shadow:0 6px 24px rgba(74,0,128,.45);
+}
+.btn-purple:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(74,0,128,.6)}
+.hero-visual{
+  display:flex;flex-direction:column;gap:20px;
+  animation:fadeRight .9s .2s var(--ease) both;
+}
+.hero-card-main{
+  background:linear-gradient(135deg,rgba(74,0,128,.6),rgba(107,34,168,.4));
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(176,125,224,.25);
+  border-radius:var(--r-lg);
+  padding:36px;
+  box-shadow:var(--sh-lg);
+  text-align:center;
+}
+.hero-logo{
+  width:150px;height:150px;margin:0 auto 20px;
+  border-radius:50%;
+  border:3px solid rgba(232,184,75,.4);
+  padding:8px;background:rgba(255,255,255,.05);
+  box-shadow:0 0 60px rgba(232,184,75,.2);
+}
+.hero-logo img{width:100%;height:100%;border-radius:50%;object-fit:contain}
+.hero-card-main h3{color:var(--white);font-size:1.4rem;margin-bottom:6px}
+.hero-card-main p{color:var(--lavender);font-size:.9rem}
+.hero-stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.hero-stat{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:var(--r-md);padding:20px 12px;text-align:center;
+  transition:var(--t);
+}
+.hero-stat:hover{background:rgba(255,255,255,.1);transform:translateY(-3px)}
+.hero-stat .num{font-family:'DM Serif Display',serif;font-size:1.8rem;color:var(--gold);display:block}
+.hero-stat .lbl{font-size:.75rem;color:var(--lavender);text-transform:uppercase;letter-spacing:.06em;font-weight:500}
+
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:none}}
+@keyframes fadeRight{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:none}}
+
+.hero-divider{
+  position:absolute;bottom:0;left:0;right:0;height:120px;
+  background:linear-gradient(to bottom right,transparent 49%,var(--silk) 50%);
+  z-index:2;
+}
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding:100px 5% 60px;gap:40px;min-height:auto}
+  .hero-divider{display:none}
+}
+
+/* ═══════════════════════════════════════════════════
+   SECTION WRAPPERS
+═══════════════════════════════════════════════════ */
+.section-light{background:var(--silk);position:relative;z-index:1}
+.section-dark{background:var(--deep);position:relative;z-index:1}
+.section-royal{
+  background:linear-gradient(160deg,var(--royal) 0%,var(--plum) 50%,var(--violet) 100%);
+  position:relative;z-index:1;overflow:hidden;
+}
+.section-royal::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.025'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.inner{max-width:1280px;margin:0 auto;padding:0 5%}
+.pad-y{padding-top:100px;padding-bottom:100px}
+.pad-y-sm{padding-top:60px;padding-bottom:60px}
+
+/* Section tag + title */
+.stag{
+  display:inline-block;
+  font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--gold);background:rgba(232,184,75,.12);
+  border:1px solid rgba(232,184,75,.25);
+  padding:.35rem .9rem;border-radius:var(--r-full);margin-bottom:16px;
+}
+.stag-light{color:var(--violet);background:rgba(107,34,168,.08);border-color:rgba(107,34,168,.2)}
+.section-title{font-size:clamp(2rem,4vw,3rem);margin-bottom:16px}
+.section-title-white{color:var(--white)}
+.section-title-dark{color:var(--royal)}
+.section-lead{font-size:1.05rem;line-height:1.75;max-width:600px}
+.section-lead-white{color:rgba(255,255,255,.68)}
+.section-lead-dark{color:var(--mid-text)}
+.title-center{text-align:center}
+.title-center .section-lead{margin:0 auto}
+
+/* ═══════════════════════════════════════════════════
+   IMPACT RIBBON (between hero and content)
+═══════════════════════════════════════════════════ */
+.impact-ribbon{
+  background:linear-gradient(90deg,var(--plum),var(--violet));
+  padding:28px 5%;
+  display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0;
+  position:relative;z-index:1;
+}
+.impact-ribbon-item{
+  display:flex;align-items:center;gap:14px;
+  padding:10px 40px;
+  border-right:1px solid rgba(255,255,255,.15);
+}
+.impact-ribbon-item:last-child{border-right:none}
+.impact-ribbon-item .num{
+  font-family:'DM Serif Display',serif;font-size:2rem;color:var(--gold);line-height:1;
+}
+.impact-ribbon-item .desc{font-size:.82rem;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.06em;font-weight:500}
+@media(max-width:700px){
+  .impact-ribbon{gap:0}
+  .impact-ribbon-item{border-right:none;border-bottom:1px solid rgba(255,255,255,.1);width:100%;padding:14px 5%}
+  .impact-ribbon-item:last-child{border-bottom:none}
+}
+
+/* ═══════════════════════════════════════════════════
+   ABOUT / MISSION + VISION
+═══════════════════════════════════════════════════ */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.about-image-stack{position:relative;height:480px}
+.about-img-primary{
+  width:75%;border-radius:var(--r-lg);
+  box-shadow:var(--sh-xl);
+  position:absolute;top:0;left:0;height:100%;object-fit:cover;
+}
+.about-img-accent{
+  width:55%;border-radius:var(--r-md);
+  box-shadow:var(--sh-lg);
+  position:absolute;bottom:-30px;right:-20px;
+  border:4px solid var(--silk);object-fit:cover;height:55%;
+}
+.about-badge-float{
+  position:absolute;top:20px;right:0;
+  background:linear-gradient(135deg,var(--gold),var(--gold-dim));
+  color:var(--royal);font-weight:700;font-size:.85rem;
+  padding:14px 20px;border-radius:var(--r-md);
+  box-shadow:var(--sh-md);text-align:center;z-index:2;
+}
+.about-badge-float strong{display:block;font-family:'DM Serif Display',serif;font-size:1.6rem}
+.mv-cards{display:flex;flex-direction:column;gap:20px;margin-top:32px}
+.mv-card{
+  display:flex;gap:20px;align-items:flex-start;
+  background:var(--white);border-radius:var(--r-md);
+  padding:24px;box-shadow:var(--sh-sm);
+  border-left:4px solid transparent;
+  transition:var(--t);
+}
+.mv-card:hover{transform:translateX(6px);box-shadow:var(--sh-md)}
+.mv-card.mission{border-left-color:var(--violet)}
+.mv-card.vision{border-left-color:var(--gold)}
+.mv-icon{
+  width:48px;height:48px;border-radius:14px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.mv-card.mission .mv-icon{background:rgba(107,34,168,.1)}
+.mv-card.vision .mv-icon{background:rgba(232,184,75,.12)}
+.mv-card.mission .mv-icon i{color:var(--violet)}
+.mv-card.vision .mv-icon i{color:var(--gold-dim)}
+.mv-icon i{font-size:20px}
+.mv-card h4{color:var(--royal);font-size:1.05rem;margin-bottom:6px}
+.mv-card p{color:var(--mid-text);font-size:.92rem;line-height:1.65}
+@media(max-width:860px){
+  .about-grid{grid-template-columns:1fr;gap:40px}
+  .about-image-stack{height:300px}
+  .about-img-accent{display:none}
+}
+
+/* ═══════════════════════════════════════════════════
+   FOUNDER MESSAGE
+═══════════════════════════════════════════════════ */
+.founder-strip{
+  display:flex;align-items:center;gap:60px;
+  background:linear-gradient(135deg,var(--royal) 0%,var(--plum) 100%);
+  border-radius:var(--r-xl);padding:60px;
+  box-shadow:var(--sh-xl);position:relative;overflow:hidden;
+}
+.founder-strip::before{
+  content:'\201C';
+  position:absolute;top:-20px;left:30px;
+  font-family:'DM Serif Display',serif;
+  font-size:280px;line-height:1;
+  color:rgba(255,255,255,.04);pointer-events:none;
+}
+.founder-quote{flex:1;position:relative;z-index:1}
+.founder-quote blockquote{
+  font-family:'DM Serif Display',serif;font-size:clamp(1.2rem,2.5vw,1.7rem);
+  color:var(--white);font-style:italic;line-height:1.5;margin-bottom:24px;
+}
+.founder-quote cite{
+  color:var(--lavender);font-size:.9rem;font-style:normal;
+  display:flex;align-items:center;gap:10px;
+}
+.founder-quote cite::before{content:'';display:inline-block;width:30px;height:2px;background:var(--gold)}
+.founder-decor{
+  width:200px;flex-shrink:0;text-align:center;position:relative;z-index:1;
+}
+.founder-orb{
+  width:160px;height:160px;border-radius:50%;
+  background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;margin:0 auto;
+}
+.founder-orb i{font-size:60px;color:rgba(255,255,255,.3)}
+@media(max-width:760px){
+  .founder-strip{flex-direction:column;gap:30px;padding:40px 28px}
+  .founder-decor{display:none}
+}
+
+/* ═══════════════════════════════════════════════════
+   CORE VALUES
+═══════════════════════════════════════════════════ */
+.values-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px}
+.val-card{
+  background:var(--white);border-radius:var(--r-lg);
+  padding:36px 28px;text-align:center;
+  box-shadow:var(--sh-sm);
+  transition:var(--t);
+  position:relative;overflow:hidden;
+}
+.val-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--plum),var(--grape));
+  transform:scaleX(0);transform-origin:left;transition:transform var(--t);
+}
+.val-card:hover{transform:translateY(-8px);box-shadow:var(--sh-lg)}
+.val-card:hover::before{transform:scaleX(1)}
+.val-icon-ring{
+  width:72px;height:72px;border-radius:50%;margin:0 auto 20px;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--plum),var(--grape));
+  box-shadow:0 8px 24px rgba(74,0,128,.3);
+  transition:var(--t);
+}
+.val-card:hover .val-icon-ring{transform:rotate(10deg) scale(1.05)}
+.val-icon-ring i{font-size:26px;color:var(--white)}
+.val-card h3{color:var(--royal);font-size:1.1rem;margin-bottom:10px;font-family:'DM Serif Display',serif}
+.val-card p{color:var(--mid-text);font-size:.9rem;line-height:1.65}
+@media(max-width:860px){.values-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.values-grid{grid-template-columns:1fr}}
+
+/* ═══════════════════════════════════════════════════
+   PROGRAMS
+═══════════════════════════════════════════════════ */
+.programs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px}
+.prog-card{
+  border-radius:var(--r-lg);overflow:hidden;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  transition:var(--t);
+  backdrop-filter:blur(10px);
+  display:flex;flex-direction:column;
+}
+.prog-card:hover{transform:translateY(-8px);background:rgba(255,255,255,.1);border-color:rgba(176,125,224,.4);box-shadow:var(--sh-lg)}
+.prog-card-top{
+  padding:36px 28px 24px;display:flex;flex-direction:column;align-items:flex-start;flex:1;
+}
+.prog-num{
+  font-family:'DM Serif Display',serif;font-size:3rem;
+  color:rgba(232,184,75,.2);line-height:1;margin-bottom:12px;
+  transition:var(--t);
+}
+.prog-card:hover .prog-num{color:rgba(232,184,75,.45)}
+.prog-card-icon{
+  width:52px;height:52px;border-radius:14px;
+  background:rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:18px;transition:var(--t);
+}
+.prog-card:hover .prog-card-icon{background:rgba(232,184,75,.15)}
+.prog-card-icon i{font-size:22px;color:var(--lavender)}
+.prog-card:hover .prog-card-icon i{color:var(--gold)}
+.prog-card h3{color:var(--white);font-size:1.2rem;margin-bottom:10px}
+.prog-card p{color:rgba(255,255,255,.6);font-size:.9rem;line-height:1.65;flex:1}
+.prog-card-footer{
+  padding:16px 28px;
+  border-top:1px solid rgba(255,255,255,.07);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.prog-card-footer span{font-size:.78rem;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+.prog-arrow{
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:center;
+  transition:var(--t);
+}
+.prog-card:hover .prog-arrow{background:var(--gold);transform:translateX(4px)}
+.prog-card:hover .prog-arrow i{color:var(--royal)}
+.prog-arrow i{font-size:14px;color:var(--muted);transition:var(--t)}
+@media(max-width:900px){.programs-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.programs-grid{grid-template-columns:1fr}}
+
+/* ═══════════════════════════════════════════════════
+   THEMATIC AREAS
+═══════════════════════════════════════════════════ */
+.themes-section{padding:100px 5%;background:var(--silk);position:relative;z-index:1}
+.themes-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:20px;margin-top:52px;
+}
+.theme-card{
+  background:var(--white);border-radius:var(--r-md);
+  padding:28px 22px;text-align:center;
+  box-shadow:var(--sh-xs);transition:var(--t);
+  border-bottom:3px solid transparent;
+}
+.theme-card:hover{transform:translateY(-6px);box-shadow:var(--sh-md);border-bottom-color:var(--violet)}
+.theme-icon{
+  width:56px;height:56px;border-radius:16px;
+  background:linear-gradient(135deg,var(--frost),var(--lavender));
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 16px;transition:var(--t);
+}
+.theme-card:hover .theme-icon{background:linear-gradient(135deg,var(--plum),var(--grape));box-shadow:0 6px 20px rgba(74,0,128,.3)}
+.theme-icon i{font-size:22px;color:var(--plum);transition:var(--t)}
+.theme-card:hover .theme-icon i{color:var(--white)}
+.theme-card h3{color:var(--royal);font-size:.95rem;margin-bottom:6px;font-family:'DM Serif Display',serif}
+.theme-card p{color:var(--mid-text);font-size:.82rem;line-height:1.55}
+.theme-card-wide{grid-column:span 2}
+@media(max-width:900px){.themes-grid{grid-template-columns:repeat(2,1fr)}.theme-card-wide{grid-column:span 1}}
+@media(max-width:500px){.themes-grid{grid-template-columns:1fr}}
+
+/* ═══════════════════════════════════════════════════
+   LEADERSHIP
+═══════════════════════════════════════════════════ */
+.leaders-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:24px;margin-top:52px;
+}
+.leader-card{
+  background:var(--white);border-radius:var(--r-lg);
+  overflow:hidden;box-shadow:var(--sh-sm);
+  transition:var(--t);position:relative;
+}
+.leader-card:hover{transform:translateY(-8px);box-shadow:var(--sh-xl)}
+.leader-photo-wrap{
+  height:180px;overflow:hidden;
+  background:linear-gradient(135deg,var(--plum),var(--grape));
+  position:relative;
+}
+.leader-photo-wrap img{
+  width:100%;height:100%;object-fit:cover;
+  object-position:top;
+  transition:transform .5s var(--ease);
+}
+.leader-card:hover .leader-photo-wrap img{transform:scale(1.06)}
+.leader-photo-placeholder{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+}
+.leader-photo-placeholder i{font-size:60px;color:rgba(255,255,255,.3)}
+.leader-body{padding:22px 20px 24px}
+.leader-role-tag{
+  display:inline-block;
+  background:var(--frost);color:var(--plum);
+  font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  padding:.25rem .7rem;border-radius:var(--r-full);
+  margin-bottom:10px;
+}
+.leader-card h3{color:var(--royal);font-size:1rem;margin-bottom:8px}
+.leader-card p{color:var(--mid-text);font-size:.82rem;line-height:1.6}
+/* First card = featured */
+.leader-card.featured{grid-column:span 2;display:flex}
+.leader-card.featured .leader-photo-wrap{width:220px;height:auto;flex-shrink:0;border-radius:0}
+.leader-card.featured .leader-body{padding:32px 28px;display:flex;flex-direction:column;justify-content:center}
+.leader-card.featured h3{font-size:1.25rem}
+.leader-card.featured p{font-size:.9rem}
+@media(max-width:1100px){
+  .leaders-grid{grid-template-columns:repeat(3,1fr)}
+  .leader-card.featured{grid-column:span 3;max-width:none}
+}
+@media(max-width:760px){
+  .leaders-grid{grid-template-columns:repeat(2,1fr)}
+  .leader-card.featured{grid-column:span 2;flex-direction:column}
+  .leader-card.featured .leader-photo-wrap{width:100%;height:200px}
+}
+@media(max-width:500px){.leaders-grid{grid-template-columns:1fr}.leader-card.featured{grid-column:span 1}}
+
+/* ═══════════════════════════════════════════════════
+   GET INVOLVED
+═══════════════════════════════════════════════════ */
+.involve-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:52px}
+.involve-card{
+  border-radius:var(--r-xl);padding:44px 32px;
+  text-align:center;position:relative;overflow:hidden;
+  transition:var(--t);
+}
+.involve-card.donate{background:linear-gradient(155deg,var(--royal),var(--plum))}
+.involve-card.volunteer{background:linear-gradient(155deg,#1a3a00,#2d6a00)}
+.involve-card.partner{background:linear-gradient(155deg,#3a1800,#6a3200)}
+.involve-card::after{
+  content:'';position:absolute;inset:0;
+  background:rgba(255,255,255,0);transition:background var(--t);
+}
+.involve-card:hover{transform:translateY(-6px);box-shadow:var(--sh-xl)}
+.involve-card:hover::after{background:rgba(255,255,255,.04)}
+.involve-card-icon{
+  width:80px;height:80px;border-radius:50%;
+  background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 24px;transition:var(--t);
+}
+.involve-card:hover .involve-card-icon{transform:scale(1.1) rotate(-5deg);background:rgba(255,255,255,.2)}
+.involve-card-icon img{
+  width:44px;height:44px;object-fit:contain;filter:brightness(0) invert(1);opacity:.85;
+}
+.involve-card h3{color:var(--white);font-size:1.4rem;margin-bottom:12px}
+.involve-card p{color:rgba(255,255,255,.7);font-size:.92rem;line-height:1.65;margin-bottom:28px}
+.involve-link{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,.15);color:var(--white);
+  font-size:.85rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  padding:.6rem 1.4rem;border-radius:var(--r-full);
+  border:1px solid rgba(255,255,255,.25);transition:var(--t);
+  position:relative;z-index:1;
+}
+.involve-link:hover{background:rgba(255,255,255,.25);transform:translateY(-2px)}
+@media(max-width:860px){.involve-grid{grid-template-columns:1fr;max-width:480px;margin-left:auto;margin-right:auto}}
+
+/* ═══════════════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════════════ */
+.contact-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:0;border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--sh-xl);margin-top:52px}
+.contact-left{
+  background:linear-gradient(155deg,var(--royal),var(--plum) 60%,var(--violet));
+  padding:60px 44px;display:flex;flex-direction:column;justify-content:space-between;
+  position:relative;overflow:hidden;
+}
+.contact-left::before{
+  content:'';position:absolute;bottom:-80px;right:-60px;
+  width:300px;height:300px;border-radius:50%;
+  background:rgba(255,255,255,.04);pointer-events:none;
+}
+.contact-left h3{font-size:1.8rem;color:var(--white);margin-bottom:12px}
+.contact-left > p{color:rgba(255,255,255,.7);font-size:.95rem;line-height:1.7;margin-bottom:40px}
+.contact-info-items{display:flex;flex-direction:column;gap:20px}
+.ci-item{display:flex;align-items:flex-start;gap:16px}
+.ci-icon{
+  width:44px;height:44px;flex-shrink:0;border-radius:12px;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);
+  display:flex;align-items:center;justify-content:center;
+}
+.ci-icon i{font-size:16px;color:var(--gold)}
+.ci-text strong{display:block;color:var(--lavender);font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;font-style:normal}
+.ci-text span{color:var(--white);font-size:.9rem}
+.contact-social{margin-top:40px;display:flex;gap:10px}
+.social-btn{
+  width:38px;height:38px;border-radius:10px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.6);transition:var(--t);
+}
+.social-btn:hover{background:var(--gold);border-color:var(--gold);color:var(--royal);transform:translateY(-3px)}
+.social-btn i{font-size:15px}
+
+.contact-right{background:var(--white);padding:60px 48px}
+.contact-right h3{color:var(--royal);font-size:1.5rem;margin-bottom:32px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.form-group{display:flex;flex-direction:column;gap:7px;margin-bottom:18px}
+.form-group label{font-size:.78rem;font-weight:600;color:var(--mid-text);text-transform:uppercase;letter-spacing:.07em}
+.form-group input,
+.form-group textarea{
+  width:100%;padding:13px 16px;
+  border:1.5px solid #e8e0f0;border-radius:var(--r-sm);
+  font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--body-text);
+  background:var(--silk);outline:none;transition:var(--t);
+  resize:vertical;
+}
+.form-group input:focus,
+.form-group textarea:focus{
+  border-color:var(--plum);background:var(--white);
+  box-shadow:0 0 0 3px rgba(74,0,128,.08);
+}
+.form-group textarea{min-height:130px}
+.form-submit{
+  width:100%;padding:16px;
+  background:linear-gradient(135deg,var(--plum),var(--grape));
+  color:var(--white);font-family:'DM Sans',sans-serif;
+  font-weight:700;font-size:.95rem;letter-spacing:.05em;text-transform:uppercase;
+  border:none;border-radius:var(--r-sm);cursor:pointer;
+  box-shadow:0 6px 24px rgba(74,0,128,.35);transition:var(--t);
+}
+.form-submit:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(74,0,128,.5);filter:brightness(1.08)}
+@media(max-width:860px){
+  .contact-layout{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .contact-left{padding:44px 28px}
+  .contact-right{padding:44px 28px}
+}
+
+/* ═══════════════════════════════════════════════════
+   BIG CTA BAND
+═══════════════════════════════════════════════════ */
+.cta-band{
+  background:linear-gradient(135deg,var(--ink) 0%,var(--royal) 40%,var(--plum) 70%,var(--blush) 100%);
+  padding:100px 5%;text-align:center;
+  position:relative;overflow:hidden;z-index:1;
+}
+.cta-band::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 50%,rgba(232,184,75,.08) 0%,transparent 70%);
+}
+.cta-band h2{
+  font-size:clamp(2rem,5vw,3.8rem);
+  color:var(--white);margin-bottom:18px;
+  position:relative;
+}
+.cta-band p{
+  color:rgba(255,255,255,.68);font-size:1.1rem;
+  max-width:560px;margin:0 auto 40px;line-height:1.7;
+  position:relative;
+}
+.cta-band-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;position:relative}
+
+/* ═══════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════ */
+.site-footer{
+  background:var(--ink);
+  border-top:1px solid rgba(176,125,224,.12);
+  padding:72px 5% 32px;
+  position:relative;z-index:1;
+}
+.footer-grid{
+  display:grid;grid-template-columns:1.6fr 1fr 1fr 1.4fr;
+  gap:48px;max-width:1280px;margin:0 auto 56px;
+}
+.footer-brand .fb-logo{height:56px;width:56px;border-radius:12px;margin-bottom:18px}
+.footer-brand p{color:rgba(255,255,255,.5);font-size:.88rem;line-height:1.75;max-width:280px}
+.footer-col h5{
+  font-family:'DM Sans',sans-serif;font-size:.73rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.12em;
+  color:var(--mist);margin-bottom:18px;
+}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col ul li a{
+  color:rgba(255,255,255,.5);font-size:.88rem;
+  transition:var(--t);display:inline-flex;align-items:center;gap:6px;
+}
+.footer-col ul li a::before{
+  content:'';display:inline-block;
+  width:0;height:1px;background:var(--gold);
+  transition:width var(--t);vertical-align:middle;
+}
+.footer-col ul li a:hover{color:var(--white);padding-left:4px}
+.footer-col ul li a:hover::before{width:14px}
+.footer-contact-items{display:flex;flex-direction:column;gap:14px}
+.fc-item{display:flex;gap:12px;align-items:flex-start}
+.fc-item i{color:var(--gold);font-size:14px;margin-top:3px;flex-shrink:0}
+.fc-item span{color:rgba(255,255,255,.55);font-size:.87rem;line-height:1.5}
+.footer-cta-box{
+  background:linear-gradient(135deg,var(--royal),var(--plum));
+  border-radius:var(--r-lg);padding:28px 24px;
+  border:1px solid rgba(176,125,224,.2);
+}
+.footer-cta-box p{color:rgba(255,255,255,.7);font-size:.88rem;margin-bottom:16px;line-height:1.6}
+.footer-cta-box .btn{width:100%;justify-content:center;font-size:.82rem;padding:12px 20px}
+.footer-bottom{
+  max-width:1280px;margin:0 auto;
+  padding-top:24px;border-top:1px solid rgba(255,255,255,.07);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+}
+.footer-bottom p{color:rgba(255,255,255,.3);font-size:.8rem}
+.footer-social{display:flex;gap:8px}
+.footer-social a{
+  width:34px;height:34px;border-radius:8px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.4);font-size:13px;transition:var(--t);
+}
+.footer-social a:hover{background:var(--plum);border-color:var(--grape);color:var(--white);transform:translateY(-2px)}
+@media(max-width:1000px){.footer-grid{grid-template-columns:1fr 1fr;gap:36px}}
+@media(max-width:600px){.footer-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ░░░░ AMBIENT ORBS ░░░░ -->
+<div class="orb-canvas" aria-hidden="true">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════════════════ -->
+<header id="navbar">
+  <div class="nav-inner">
+    <a href="#home" class="nav-logo"><img src="logo2.png" alt="Smile and Shine Girls Foundation"></a>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#programs">Programs</a></li>
+      <li><a href="#leadership">Leadership</a></li>
+      <li><a href="#get-involved">Get Involved</a></li>
+      <li><a href="#contact" class="nav-cta">Contact Us</a></li>
+    </ul>
+    <button class="nav-burger" id="burgerBtn" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav class="nav-mobile" id="mobileNav">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#programs">Programs</a>
+    <a href="#leadership">Leadership</a>
+    <a href="#get-involved">Get Involved</a>
+    <a href="#contact">Contact Us</a>
+  </nav>
+</header>
+
+<!-- ═══════════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════════ -->
+<section id="home">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-badge reveal"><i class="fa-solid fa-star"></i> Non-Profit · Kenya</div>
+      <h1 class="reveal delay-1">Empowering Girls to <em>Shine</em> Across Kenya</h1>
+      <p class="hero-desc reveal delay-2">
+        Smile and Shine Girls Foundation transforms lives through education, advocacy, and sustainable development — building communities where every girl can thrive.
+      </p>
+      <div class="hero-actions reveal delay-3">
+        <a href="#get-involved"><button class="btn btn-gold"><i class="fa-solid fa-heart"></i> Get Involved</button></a>
+        <a href="#about"><button class="btn btn-ghost"><i class="fa-solid fa-play"></i> Our Story</button></a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card-main reveal-right delay-1">
+        <div class="hero-logo">
+          <img src="logo2.png" alt="Smile and Shine Logo">
+        </div>
+        <h3>Smile and Shine</h3>
+        <p>Girls Foundation — Inspiring Smiles</p>
+      </div>
+      <div class="hero-stats-row reveal-right delay-2">
+        <div class="hero-stat">
+          <span class="num">500+</span>
+          <span class="lbl">Girls Supported</span>
+        </div>
+        <div class="hero-stat">
+          <span class="num">12</span>
+          <span class="lbl">Counties Active</span>
+        </div>
+        <div class="hero-stat">
+          <span class="num">50k+</span>
+          <span class="lbl">Lives Impacted</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     IMPACT RIBBON
+═══════════════════════════════════════════════════ -->
+<div class="impact-ribbon" role="region" aria-label="Impact statistics">
+  <div class="impact-ribbon-item reveal">
+    <div><div class="num">500+</div><div class="desc">Girls Helped</div></div>
+  </div>
+  <div class="impact-ribbon-item reveal delay-1">
+    <div><div class="num">10+</div><div class="desc">Schools Reached</div></div>
+  </div>
+  <div class="impact-ribbon-item reveal delay-2">
+    <div><div class="num">290</div><div class="desc">Constituencies</div></div>
+  </div>
+  <div class="impact-ribbon-item reveal delay-3">
+    <div><div class="num">12</div><div class="desc">Counties Active</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     ABOUT
+═══════════════════════════════════════════════════ -->
+<section id="about" class="section-light">
+  <div class="inner pad-y">
+
+    <div class="about-grid">
+      <div class="about-image-stack reveal-left">
+        <img src="photos/girls.png" alt="Girls from the foundation" class="about-img-primary">
+        <img src="logo2.png" alt="Foundation" class="about-img-accent">
+        <div class="about-badge-float reveal delay-3">
+          <strong>Est.</strong>
+          <span>Kenya</span>
+        </div>
+      </div>
+      <div class="about-text reveal-right">
+        <span class="stag stag-light">Our Story</span>
+        <h2 class="section-title section-title-dark">Who We Are &amp;<br>What We Stand For</h2>
+        <p class="section-lead section-lead-dark">
+          The Smile and Shine Girls Foundation is dedicated to creating a world where every girl has the opportunity to shine. We focus on empowering marginalised communities through education, mentorship, and sustainable development initiatives across Kenya.
+        </p>
+        <div class="mv-cards">
+          <div class="mv-card mission reveal delay-1">
+            <div class="mv-icon"><i class="fa-solid fa-heart"></i></div>
+            <div>
+              <h4>Our Mission</h4>
+              <p>We are dedicated to empowering marginalized communities in Kenya through sustainable development, advocacy, and driving lasting positive change for girls and their families.</p>
+            </div>
+          </div>
+          <div class="mv-card vision reveal delay-2">
+            <div class="mv-icon"><i class="fa-solid fa-eye"></i></div>
+            <div>
+              <h4>Our Vision</h4>
+              <p>A world where every girl has the opportunity to shine, with access to quality education, mentorship, and sustainable development — where every girl can lead and transform her community.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Founder Message -->
+    <div class="founder-strip reveal" style="margin-top:80px">
+      <div class="founder-quote">
+        <blockquote>
+          "At Smile and Shine Girls Foundation, we believe in the power of education and mentorship to transform lives. We are committed to creating a future where every girl can thrive, lead, and contribute meaningfully to her community."
+        </blockquote>
+        <cite>Founder, Smile and Shine Girls Foundation</cite>
+      </div>
+      <div class="founder-decor">
+        <div class="founder-orb">
+          <i class="fa-solid fa-quote-right"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Core Values -->
+    <div style="margin-top:80px" class="title-center">
+      <span class="stag stag-light reveal">Core Values</span>
+      <h2 class="section-title section-title-dark reveal delay-1">What Guides Us</h2>
+    </div>
+    <div class="values-grid">
+      <div class="val-card reveal delay-1">
+        <div class="val-icon-ring"><i class="fa-solid fa-graduation-cap"></i></div>
+        <h3>Education Access</h3>
+        <p>Scholarships and school supplies ensuring every girl has the academic tools she needs to succeed.</p>
+      </div>
+      <div class="val-card reveal delay-2">
+        <div class="val-icon-ring"><i class="fa-solid fa-heart-pulse"></i></div>
+        <h3>Health &amp; Wellness</h3>
+        <p>Hygiene kits and community health workshops that protect dignity and promote well-being for all girls.</p>
+      </div>
+      <div class="val-card reveal delay-3">
+        <div class="val-icon-ring"><i class="fa-solid fa-seedling"></i></div>
+        <h3>Community &amp; Growth</h3>
+        <p>Sustainable farming practices and skills-building initiatives that strengthen communities from within.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     PROGRAMS
+═══════════════════════════════════════════════════ -->
+<section id="programs" class="section-dark">
+  <div class="inner pad-y">
+    <div class="title-center">
+      <span class="stag reveal">What We Do</span>
+      <h2 class="section-title section-title-white reveal delay-1">Our Programs</h2>
+      <p class="section-lead section-lead-white reveal delay-2">Comprehensive, community-driven initiatives designed to uplift and empower girls at every stage of their journey.</p>
+    </div>
+    <div class="programs-grid">
+      <div class="prog-card reveal delay-1">
+        <div class="prog-card-top">
+          <div class="prog-num">01</div>
+          <div class="prog-card-icon"><i class="fa-solid fa-users"></i></div>
+          <h3>Mentorship Program</h3>
+          <p>Connecting young girls with inspiring role models who guide, encourage, and champion their potential through structured one-on-one and group mentorship.</p>
+        </div>
+        <div class="prog-card-footer">
+          <span>Mentorship</span>
+          <div class="prog-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+        </div>
+      </div>
+      <div class="prog-card reveal delay-2">
+        <div class="prog-card-top">
+          <div class="prog-num">02</div>
+          <div class="prog-card-icon"><i class="fa-solid fa-book-open"></i></div>
+          <h3>Educational Workshops</h3>
+          <p>Hands-on workshops providing practical skills and knowledge for personal growth, building confidence and opening pathways to opportunity across Kenya.</p>
+        </div>
+        <div class="prog-card-footer">
+          <span>Education</span>
+          <div class="prog-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+        </div>
+      </div>
+      <div class="prog-card reveal delay-3">
+        <div class="prog-card-top">
+          <div class="prog-num">03</div>
+          <div class="prog-card-icon"><i class="fa-solid fa-hands-holding-circle"></i></div>
+          <h3>Community Outreach</h3>
+          <p>Grassroots engagement with communities to support girls' holistic development, health, and social well-being at the community level where change begins.</p>
+        </div>
+        <div class="prog-card-footer">
+          <span>Community</span>
+          <div class="prog-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     THEMATIC AREAS
+═══════════════════════════════════════════════════ -->
+<section class="themes-section">
+  <div class="inner">
+    <div class="title-center">
+      <span class="stag stag-light reveal">Focus Areas</span>
+      <h2 class="section-title section-title-dark reveal delay-1">Seven Thematic Pillars</h2>
+      <p class="section-lead section-lead-dark reveal delay-2">Every initiative we run is rooted in one of these seven interconnected focus areas.</p>
+    </div>
+    <div class="themes-grid">
+      <div class="theme-card reveal delay-1">
+        <div class="theme-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+        <h3>Budget Advocacy</h3>
+        <p>Ensuring fair resource allocation for underserved communities across Kenya</p>
+      </div>
+      <div class="theme-card reveal delay-2">
+        <div class="theme-icon"><i class="fa-solid fa-leaf"></i></div>
+        <h3>Environmental Conservation</h3>
+        <p>Protecting nature and building eco-conscious habits for future generations</p>
+      </div>
+      <div class="theme-card reveal delay-3">
+        <div class="theme-icon"><i class="fa-solid fa-school"></i></div>
+        <h3>Education Empowerment</h3>
+        <p>Knowledge is power — ensuring access to quality education for all girls</p>
+      </div>
+      <div class="theme-card reveal delay-4">
+        <div class="theme-icon"><i class="fa-solid fa-droplet"></i></div>
+        <h3>Menstrual Health</h3>
+        <p>Providing dignity, hygiene education, and support for every girl</p>
+      </div>
+      <div class="theme-card reveal delay-1">
+        <div class="theme-icon"><i class="fa-solid fa-gavel"></i></div>
+        <h3>Good Governance</h3>
+        <p>Promoting transparency, accountability, and civic participation</p>
+      </div>
+      <div class="theme-card reveal delay-2">
+        <div class="theme-icon"><i class="fa-solid fa-users"></i></div>
+        <h3>Youth Empowerment</h3>
+        <p>Equipping young people with the skills and confidence to lead their future</p>
+      </div>
+      <div class="theme-card theme-card-wide reveal delay-3">
+        <div class="theme-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+        <h3>Sexual &amp; Reproductive Health</h3>
+        <p>Ensuring access to essential health services, information, and education for every girl</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     LEADERSHIP
+═══════════════════════════════════════════════════ -->
+<section id="leadership" class="section-royal">
+  <div class="inner pad-y">
+    <div class="title-center">
+      <span class="stag reveal">The Team</span>
+      <h2 class="section-title section-title-white reveal delay-1">Our Leadership</h2>
+      <p class="section-lead section-lead-white reveal delay-2">Meet the dedicated team driving change across 290 constituencies throughout Kenya.</p>
+    </div>
+    <div class="leaders-grid">
+
+      <!-- Featured -->
+      <div class="leader-card featured reveal delay-1">
+        <div class="leader-photo-wrap">
+          <img src="photos/CEO.jpeg" alt="Ritamoi Joseph" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="leader-photo-placeholder" style="display:none"><i class="fa-solid fa-user"></i></div>
+        </div>
+        <div class="leader-body">
+          <div class="leader-role-tag">Founder &amp; CEO</div>
+          <h3>Ritamoi Joseph</h3>
+          <p>The visionary founder and CEO of Smile and Shine Girls Foundation, leading initiatives to bring smiles and opportunity to communities across all 290 constituencies of Kenya.</p>
+        </div>
+      </div>
+
+      <div class="leader-card reveal delay-2">
+        <div class="leader-photo-wrap">
+          <img src="photos/Director comm.jpeg" alt="Joyline Chenaang'at" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="leader-photo-placeholder" style="display:none"><i class="fa-solid fa-user"></i></div>
+        </div>
+        <div class="leader-body">
+          <div class="leader-role-tag">Director Communication</div>
+          <h3>Joyline Chenaang'at</h3>
+          <p>Leads communication efforts, ensuring effective outreach and meaningful stakeholder engagement.</p>
+        </div>
+      </div>
+
+      <div class="leader-card reveal delay-3">
+        <div class="leader-photo-wrap">
+          <img src="photos/Finance.jpeg" alt="Shirleen Kasmeri" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="leader-photo-placeholder" style="display:none"><i class="fa-solid fa-user"></i></div>
+        </div>
+        <div class="leader-body">
+          <div class="leader-role-tag">Finance</div>
+          <h3>Shirleen Kasmeri</h3>
+          <p>Manages financial operations ensuring fiscal responsibility, transparency, and accountability.</p>
+        </div>
+      </div>
+
+      <div class="leader-card reveal delay-4">
+        <div class="leader-photo-wrap">
+          <img src="photos/program cordinator.jpeg" alt="Anne Wangoi" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="leader-photo-placeholder" style="display:none"><i class="fa-solid fa-user"></i></div>
+        </div>
+        <div class="leader-body">
+          <div class="leader-role-tag">Program Coordinator</div>
+          <h3>Anne Wangoi</h3>
+          <p>Coordinates programs to ensure they meet the needs of young girls across our communities.</p>
+        </div>
+      </div>
+
+      <div class="leader-card reveal delay-1">
+        <div class="leader-photo-wrap">
+          <img src="photos/project manager.jpeg" alt="Edit Jelagat" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="leader-photo-placeholder" style="display:none"><i class="fa-solid fa-user"></i></div>
+        </div>
+        <div class="leader-body">
+          <div class="leader-role-tag">Project Manager</div>
+          <h3>Edit Jelagat</h3>
+          <p>Manages projects end-to-end, ensuring timely delivery and maximum impact.</p>
+        </div>
+      </div>
+
+      <div class="leader-card reveal delay-2">
+        <div class="leader-photo-wrap">
+          <img src="photos/Program director.jpeg" alt="Sharon Chemeru" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="leader-photo-placeholder" style="display:none"><i class="fa-solid fa-user"></i></div>
+        </div>
+        <div class="leader-body">
+          <div class="leader-role-tag">Program Director</div>
+          <h3>Sharon Chemeru</h3>
+          <p>Leads strategic program direction aligned with our mission and vision for girls.</p>
+        </div>
+      </div>
+
+      <div class="leader-card reveal delay-3">
+        <div class="leader-photo-wrap">
+          <img src="photos/community outreach coordinator.jpeg" alt="Sylvia Odhiambo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="leader-photo-placeholder" style="display:none"><i class="fa-solid fa-user"></i></div>
+        </div>
+        <div class="leader-body">
+          <div class="leader-role-tag">Community Outreach</div>
+          <h3>Sylvia Odhiambo</h3>
+          <p>Builds bridges between our foundation and the communities we serve.</p>
+        </div>
+      </div>
+
+      <div class="leader-card reveal delay-4">
+        <div class="leader-photo-wrap">
+          <img src="photos/monitoring and evaluation.jpeg" alt="Betty Chenang'at" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="leader-photo-placeholder" style="display:none"><i class="fa-solid fa-user"></i></div>
+        </div>
+        <div class="leader-body">
+          <div class="leader-role-tag">Monitoring &amp; Evaluation</div>
+          <h3>Betty Chenang'at</h3>
+          <p>Ensures every program delivers measurable, lasting impact through rigorous evaluation.</p>
+        </div>
+      </div>
+
+      <div class="leader-card reveal delay-1">
+        <div class="leader-photo-wrap">
+          <img src="photos/procurement.jpeg" alt="Celestine Cheptoo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="leader-photo-placeholder" style="display:none"><i class="fa-solid fa-user"></i></div>
+        </div>
+        <div class="leader-body">
+          <div class="leader-role-tag">Procurement Officer</div>
+          <h3>Celestine Cheptoo</h3>
+          <p>Manages procurement ensuring efficient and ethical resource acquisition.</p>
+        </div>
+      </div>
+
+      <div class="leader-card reveal delay-2">
+        <div class="leader-photo-wrap">
+          <img src="photos/Communication Officer.jpeg" alt="Scovia Amoit" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="leader-photo-placeholder" style="display:none"><i class="fa-solid fa-user"></i></div>
+        </div>
+        <div class="leader-body">
+          <div class="leader-role-tag">Communication Officer</div>
+          <h3>Scovia Amoit</h3>
+          <p>Amplifies our message and deepens engagement across all channels.</p>
+        </div>
+      </div>
+
+      <div class="leader-card reveal delay-3">
+        <div class="leader-photo-wrap">
+          <img src="photos/human resource.jpeg" alt="Lindah Chebet" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="leader-photo-placeholder" style="display:none"><i class="fa-solid fa-user"></i></div>
+        </div>
+        <div class="leader-body">
+          <div class="leader-role-tag">HR Manager</div>
+          <h3>Lindah Chebet</h3>
+          <p>Nurtures a supportive and empowering environment for every team member.</p>
+        </div>
+      </div>
+
+      <div class="leader-card reveal delay-4">
+        <div class="leader-photo-wrap">
+          <img src="photos/Research Officer.jpeg" alt="Salome Cherop" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="leader-photo-placeholder" style="display:none"><i class="fa-solid fa-user"></i></div>
+        </div>
+        <div class="leader-body">
+          <div class="leader-role-tag">Research Officer</div>
+          <h3>Salome Cherop</h3>
+          <p>Leads research initiatives ensuring evidence-based, continuously improving programming.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     GET INVOLVED
+═══════════════════════════════════════════════════ -->
+<section id="get-involved" class="section-dark">
+  <div class="inner pad-y">
+    <div class="title-center">
+      <span class="stag reveal">Take Action</span>
+      <h2 class="section-title section-title-white reveal delay-1">Ways to Support</h2>
+      <p class="section-lead section-lead-white reveal delay-2">Your support — in whatever form — directly transforms the lives of girls and communities across Kenya.</p>
+    </div>
+    <div class="involve-grid">
+      <div class="involve-card donate reveal delay-1">
+        <div class="involve-card-icon">
+          <img src="photos/seedling.png" alt="Donate">
+        </div>
+        <h3>Make a Donation</h3>
+        <p>Fund education, hygiene kits, and mentorship programs for girls who need it most. Every contribution creates real, lasting impact.</p>
+        <a href="https://paypal.me/YourOrg" target="_blank" rel="noopener" class="involve-link">
+          <i class="fa-solid fa-heart"></i> Donate Now
+        </a>
+      </div>
+      <div class="involve-card volunteer reveal delay-2">
+        <div class="involve-card-icon">
+          <img src="photos/team.png" alt="Volunteer">
+        </div>
+        <h3>Join the Team</h3>
+        <p>Share your skills as a mentor, teacher, or organizer — both onsite in Kenya and remotely from anywhere in the world.</p>
+        <a href="https://forms.gle/YourFormLink" target="_blank" rel="noopener" class="involve-link">
+          <i class="fa-solid fa-arrow-right"></i> Apply Now
+        </a>
+      </div>
+      <div class="involve-card partner reveal delay-3">
+        <div class="involve-card-icon">
+          <img src="photos/handshake.png" alt="Partner">
+        </div>
+        <h3>Partner With Us</h3>
+        <p>Corporate and institutional partnerships drive sustainable development. Let's collaborate to build change that lasts generations.</p>
+        <a href="mailto:smileandshinegirlsfoundation@gmail.com" class="involve-link">
+          <i class="fa-solid fa-handshake"></i> Become a Partner
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     CTA BAND
+═══════════════════════════════════════════════════ -->
+<div class="cta-band">
+  <h2 class="reveal">Be The Reason Someone <em style="font-style:italic;background:linear-gradient(135deg,var(--gold),var(--rose));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Smiles</em></h2>
+  <p class="reveal delay-1">Your contribution helps us reach more girls and transform more communities across Kenya. Together, we can build a brighter future.</p>
+  <div class="cta-band-btns">
+    <a href="https://paypal.me/YourOrg" target="_blank" rel="noopener">
+      <button class="btn btn-gold reveal delay-2"><i class="fa-solid fa-heart"></i> Donate Now</button>
+    </a>
+    <a href="#contact">
+      <button class="btn btn-ghost reveal delay-3"><i class="fa-solid fa-envelope"></i> Get In Touch</button>
+    </a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     CONTACT
+═══════════════════════════════════════════════════ -->
+<section id="contact" class="section-light">
+  <div class="inner pad-y">
+    <div class="title-center">
+      <span class="stag stag-light reveal">Get In Touch</span>
+      <h2 class="section-title section-title-dark reveal delay-1">We'd Love to Hear From You</h2>
+      <p class="section-lead section-lead-dark reveal delay-2">Whether you want to partner, volunteer, or learn more about our mission — reach out and we'll respond as soon as possible.</p>
+    </div>
+
+    <div class="contact-layout reveal">
+      <div class="contact-left">
+        <div>
+          <h3>Contact Information</h3>
+          <p>Reach out through any of these channels and a member of our team will be in touch shortly.</p>
+          <div class="contact-info-items">
+            <div class="ci-item">
+              <div class="ci-icon"><i class="fas fa-envelope"></i></div>
+              <div class="ci-text">
+                <strong>Email</strong>
+                <span>smileandshinegirlsfoundation@gmail.com</span>
+              </div>
+            </div>
+            <div class="ci-item">
+              <div class="ci-icon"><i class="fas fa-phone"></i></div>
+              <div class="ci-text">
+                <strong>Phone</strong>
+                <span>07xxxxxx</span>
+              </div>
+            </div>
+            <div class="ci-item">
+              <div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div>
+              <div class="ci-text">
+                <strong>Location</strong>
+                <span>Kenya</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="contact-social">
+            <a href="#" class="social-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-btn" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-btn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-right">
+        <h3>Send a Message</h3>
+        <form action="mailto:smileandshinegirlsfoundation@gmail.com" method="post" enctype="text/plain">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="f-name">Your Name</label>
+              <input type="text" id="f-name" name="name" placeholder="Jane Doe" required>
+            </div>
+            <div class="form-group">
+              <label for="f-email">Email Address</label>
+              <input type="email" id="f-email" name="email" placeholder="jane@example.com" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="f-subject">Subject</label>
+            <input type="text" id="f-subject" name="subject" placeholder="How can we help?">
+          </div>
+          <div class="form-group">
+            <label for="f-message">Message</label>
+            <textarea id="f-message" name="message" placeholder="Tell us how you'd like to get involved or support our mission..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit">
+            <i class="fa-solid fa-paper-plane"></i>&nbsp; Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════ -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <img src="logo2.png" alt="Smile and Shine Logo" class="fb-logo">
+      <p>Smile and Shine Girls Foundation is dedicated to empowering girls and communities in Kenya through education, advocacy, and sustainable development.</p>
+    </div>
+    <div class="footer-col">
+      <h5>Navigation</h5>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#programs">Programs</a></li>
+        <li><a href="#leadership">Leadership</a></li>
+        <li><a href="#get-involved">Get Involved</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h5>Contact Us</h5>
+      <div class="footer-contact-items">
+        <div class="fc-item">
+          <i class="fas fa-envelope"></i>
+          <span>smileandshinegirlsfoundation<br>@gmail.com</span>
+        </div>
+        <div class="fc-item">
+          <i class="fas fa-phone"></i>
+          <span>07xxxxxx</span>
+        </div>
+        <div class="fc-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>Kenya</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5>Support Our Mission</h5>
+      <div class="footer-cta-box">
+        <p>Your support helps us reach more girls and communities across Kenya.</p>
+        <a href="#get-involved"><button class="btn btn-gold">Get Involved <i class="fa-solid fa-arrow-right"></i></button></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Smile and Shine Girls Foundation. All rights reserved.</p>
+    <div class="footer-social">
+      <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════════ -->
+<script>
+/* ── Navbar scroll state ── */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+/* ── Mobile menu ── */
+const burger = document.getElementById('burgerBtn');
+const mobileNav = document.getElementById('mobileNav');
+burger.addEventListener('click', () => {
+  mobileNav.classList.toggle('open');
+  const spans = burger.querySelectorAll('span');
+  const open = mobileNav.classList.contains('open');
+  spans[0].style.transform = open ? 'rotate(45deg) translate(5px,5px)' : '';
+  spans[1].style.opacity = open ? '0' : '1';
+  spans[2].style.transform = open ? 'rotate(-45deg) translate(5px,-5px)' : '';
+});
+mobileNav.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    mobileNav.classList.remove('open');
+    const spans = burger.querySelectorAll('span');
+    spans[0].style.transform = '';
+    spans[1].style.opacity = '1';
+    spans[2].style.transform = '';
+  });
+});
+
+/* ── Scroll reveal ── */
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      revealObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => revealObs.observe(el));
+
+/* ── Active nav link on scroll ── */
+const sections = document.querySelectorAll('section[id], div[id]');
+const navAnchors = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) current = s.id;
+  });
+  navAnchors.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current
+      ? 'var(--gold)' : '';
+  });
+}, { passive: true });
+</script>
+</body>
+</html>
