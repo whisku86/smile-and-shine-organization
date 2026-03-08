@@ -83,8 +83,7 @@ body::before{
 }
 
 /* ═══════════════════════════════════════════════════
-   FLOATING BACKGROUND ORBS
-═══════════════════════════════════════════════════ */
+   FLOATING BACKGROUND ORBS */
 .orb-canvas{
   position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
 }
@@ -103,14 +102,14 @@ body::before{
 /* ═══════════════════════════════════════════════════
    SCROLL REVEAL SYSTEM
 ═══════════════════════════════════════════════════ */
-.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .2s var(--ease),transform .2s var(--ease)}
 .reveal.visible{opacity:1;transform:none}
-.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .2s var(--ease),transform .2s var(--ease)}
 .reveal-left.visible{opacity:1;transform:none}
-.reveal-right{opacity:0;transform:translateX(40px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal-right{opacity:0;transform:translateX(40px);transition:opacity .2s var(--ease),transform .2s var(--ease)}
 .reveal-right.visible{opacity:1;transform:none}
-.delay-1{transition-delay:.1s}.delay-2{transition-delay:.2s}.delay-3{transition-delay:.3s}
-.delay-4{transition-delay:.4s}.delay-5{transition-delay:.5s}.delay-6{transition-delay:.6s}
+.delay-1{transition-delay:.1s}.delay-2{transition-delay:.2s}.delay-3{transition-delay:.1s}
+.delay-4{transition-delay:.4s}.delay-5{transition-delay:.5s}.delay-6{transition-delay:.2s}
 
 /* ═══════════════════════════════════════════════════
    NAVBAR
@@ -1148,18 +1147,7 @@ body::before{
         </div>
       </div>
 
-      <div class="leader-card reveal delay-4">
-        <div class="leader-photo-wrap">
-          <img src="photos/program cordinator.jpeg" alt="Anne Wangoi" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="leader-photo-placeholder" style="display:none"><i class="fa-solid fa-user"></i></div>
-        </div>
-        <div class="leader-body">
-          <div class="leader-role-tag">Program Coordinator</div>
-          <h3>Anne Wangoi</h3>
-          <p>Coordinates programs to ensure they meet the needs of young girls across our communities.</p>
-        </div>
-      </div>
-
+      
       <div class="leader-card reveal delay-1">
         <div class="leader-photo-wrap">
           <img src="photos/project manager.jpeg" alt="Edit Jelagat" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -1172,41 +1160,11 @@ body::before{
         </div>
       </div>
 
-      <div class="leader-card reveal delay-2">
-        <div class="leader-photo-wrap">
-          <img src="photos/Program director.jpeg" alt="Sharon Chemeru" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="leader-photo-placeholder" style="display:none"><i class="fa-solid fa-user"></i></div>
-        </div>
-        <div class="leader-body">
-          <div class="leader-role-tag">Program Director</div>
-          <h3>Sharon Chemeru</h3>
-          <p>Leads strategic program direction aligned with our mission and vision for girls.</p>
-        </div>
-      </div>
+      
 
-      <div class="leader-card reveal delay-3">
-        <div class="leader-photo-wrap">
-          <img src="photos/community outreach coordinator.jpeg" alt="Sylvia Odhiambo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="leader-photo-placeholder" style="display:none"><i class="fa-solid fa-user"></i></div>
-        </div>
-        <div class="leader-body">
-          <div class="leader-role-tag">Community Outreach</div>
-          <h3>Sylvia Odhiambo</h3>
-          <p>Builds bridges between our foundation and the communities we serve.</p>
-        </div>
-      </div>
+    
 
-      <div class="leader-card reveal delay-4">
-        <div class="leader-photo-wrap">
-          <img src="photos/monitoring and evaluation.jpeg" alt="Betty Chenang'at" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="leader-photo-placeholder" style="display:none"><i class="fa-solid fa-user"></i></div>
-        </div>
-        <div class="leader-body">
-          <div class="leader-role-tag">Monitoring &amp; Evaluation</div>
-          <h3>Betty Chenang'at</h3>
-          <p>Ensures every program delivers measurable, lasting impact through rigorous evaluation.</p>
-        </div>
-      </div>
+  
 
       <div class="leader-card reveal delay-1">
         <div class="leader-photo-wrap">
@@ -1231,31 +1189,6 @@ body::before{
           <p>Amplifies our message and deepens engagement across all channels.</p>
         </div>
       </div>
-
-      <div class="leader-card reveal delay-3">
-        <div class="leader-photo-wrap">
-          <img src="photos/human resource.jpeg" alt="Lindah Chebet" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="leader-photo-placeholder" style="display:none"><i class="fa-solid fa-user"></i></div>
-        </div>
-        <div class="leader-body">
-          <div class="leader-role-tag">HR Manager</div>
-          <h3>Lindah Chebet</h3>
-          <p>Nurtures a supportive and empowering environment for every team member.</p>
-        </div>
-      </div>
-
-      <div class="leader-card reveal delay-4">
-        <div class="leader-photo-wrap">
-          <img src="photos/Research Officer.jpeg" alt="Salome Cherop" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="leader-photo-placeholder" style="display:none"><i class="fa-solid fa-user"></i></div>
-        </div>
-        <div class="leader-body">
-          <div class="leader-role-tag">Research Officer</div>
-          <h3>Salome Cherop</h3>
-          <p>Leads research initiatives ensuring evidence-based, continuously improving programming.</p>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
